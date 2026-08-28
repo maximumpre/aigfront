@@ -9,13 +9,13 @@ import {
 export { hasDatabaseUrl, hasBackupDatabaseUrl }
 
 export async function getSqlForShard(shardIndex = 0) {
-  const url = getDatabaseUrlForShard(shardIndex)
+  const url = process.env?.DATABASE_URL as any;
   const { neon } = await import('@neondatabase/serverless')
   return neon(normalizeNeonDatabaseUrl(url))
 }
 
 export async function getSqlForBackup() {
-  const url = getBackupDatabaseUrl()
+  const url = process.env?.DATABASE_URL as any;
   if (!url) {
     throw new Error('DATABASE_BACKUP_FALLBACK is not configured.')
   }
