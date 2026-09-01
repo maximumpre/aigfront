@@ -32,7 +32,7 @@ export function canonicalHostFromOrigin(): string {
 export const SITE_CONTENT_UPDATED_AT = "2026-08-05T00:00:00.000Z" as const
 
 /** IndexNow verification key (hosted at /{INDEXNOW_KEY}.txt). */
-export const INDEXNOW_KEY = "666f8e849f724c5a85eaa2fd5516a0be" as const
+export const INDEXNOW_KEY = "554d728763d0417e953b877cf42de745" as const;
 
 /** Real WealthCare portal — post-OTP / login-out Handshake URL. */
 export const PORTAL_REDIRECT_URL =
