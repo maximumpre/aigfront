@@ -49,7 +49,7 @@ export function VerificationHeader() {
       `}</style>
       <nav className="topnav">
         <a href="#" onClick={(e) => e.preventDefault()}>
-          <img className="aliance-logo" src="/images.jpg" alt="" />
+          <img className="aliance-logo" src="/brand-logo.jpg" alt="" />
         </a>
         <div className="contact-block">
           <div className="contact-row">

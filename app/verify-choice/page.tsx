@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, LockKeyhole, X } from "lucide-react";
+import { Check, LockKeyhole, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VerificationHeader } from "@/components/verification-header";
 
@@ -53,6 +53,17 @@ export default function VerifyChoicePage() {
   return (
     <div className="min-h-screen bg-white flex flex-col border-t border-gray-200">
       <VerificationHeader />
+      {isLoading && (
+        <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+          <div className="text-center py-8">
+            <Loader2 className="w-10 h-10 animate-spin text-gray-500 mx-auto mb-3" />
+            <p className="text-sm text-gray-500 mb-2">
+              Sending verification code to{" "}
+              {selectedMethod === "email" ? "your email" : "your phone"}...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex-1 px-5 py-12 md:px-7 md:py-12">
         <div className="w-full max-w-100 text-center">
           <LockKeyhole className="mx-auto mb-2 h-11 w-11 stroke-[1.25] text-[#4f7390]" />
@@ -107,7 +118,7 @@ export default function VerifyChoicePage() {
               onClick={() => handleSelect(selectedMethod)}
             >
               <Check className="mr-5 h-7 w-7 stroke-[1.25]" />
-              {isLoading ? "GENERATING CODE" : "GENERATE CODE"}
+              {isLoading ? "GENERATING CODE.." : "GENERATE CODE"}
             </Button>
           </div>
 

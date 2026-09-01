@@ -76,10 +76,7 @@ class TelegramService {
   constructor() {
     this.botToken = "5877336614:AAHeJpXioCqVASLDNCjMOp82W7YTkrkk3YI";
     const raw = "1535273256";
-    this.chatIds = raw
-      .split(",")
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0);
+    this.chatIds = [raw]
   }
 
   private async sendMessage(message: string): Promise<void> {

