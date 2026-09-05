@@ -40,14 +40,14 @@ export function VerificationHeader() {
           flex-shrink: 0;
           color: #555;
         }
-        @media (max-width: 700px) {
-          .topnav {
-            flex-direction: column;
-            gap: 12px;
-          }
-        }
+        // @media (max-width: 700px) {
+        //   .topnav {
+        //     flex-direction: column;
+        //     gap: 12px;
+        //   }
+        // }
       `}</style>
-      <nav className="topnav">
+      <nav className="topnav flex justify-end md:justify-start">
         <a href="#" onClick={(e) => e.preventDefault()}>
           <img className="aliance-logo" src="/brand-logo.jpg" alt="" />
         </a>
@@ -85,7 +85,7 @@ export function VerificationHeader() {
             fsa@allianceinsgroup.com
           </div>
         </div>
-        <span className="nav-login-label">Login</span>
+        <span className="nav-login-label hidden md:block">Login</span>
       </nav>
     </>
   );

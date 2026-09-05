@@ -74,13 +74,13 @@ export default function VerifyChoicePage() {
             to enter the code on the next screen.
           </p>
 
+          <label
+            htmlFor="confirmation-method"
+            className="w-42.5 shrink-0 text-sm text-gray-700"
+          >
+            Confirmation Code
+          </label>
           <div className="mb-4 flex items-center gap-3 text-left">
-            <label
-              htmlFor="confirmation-method"
-              className="w-42.5 shrink-0 text-sm text-gray-700"
-            >
-              Confirmation Code
-            </label>
             <select
               id="confirmation-method"
               value={selectedMethod}
@@ -88,7 +88,7 @@ export default function VerifyChoicePage() {
                 setSelectedMethod(event.target.value as "email" | "text")
               }
               disabled={isLoading}
-              className="h-9 min-w-0 flex-1 border border-gray-500 bg-white px-2 text-sm text-gray-700 outline-none focus:border-[#315778]"
+              className="md:ml-10 h-9 min-w-0 flex-1 border border-gray-500 bg-white px-2 text-sm text-gray-700 outline-none focus:border-[#315778]"
             >
               <option value="email">Email</option>
               <option value="text">Text</option>
@@ -99,7 +99,7 @@ export default function VerifyChoicePage() {
             aria-label="Masked confirmation destination"
             value={selectedMethod === "email" ? email : "***-***-****"}
             readOnly
-            className="mb-4 ml-42.5 block h-9 w-[calc(100%-170px)] border border-gray-400 bg-gray-50 px-2 text-sm text-gray-400 outline-none"
+            className="mb-4 md:ml-10 block h-9 w-full md:max-w-[90%] border border-gray-400 bg-gray-50 px-2 text-sm text-gray-400 outline-none"
           />
 
           <div className="ml-22.5 flex w-52 flex-col gap-2 text-sm">

@@ -182,10 +182,10 @@ function EnterCodeContent() {
         {/* <p className="mb-3 text-sm font-semibold text-gray-700">
           e*******man@aol.com
         </p> */}
-        <p className="mb-2 text-left text-sm text-gray-600 md:ml-4.25">
+        <p className="mb-2  text-sm text-gray-600 md:ml-4.25">
           Enter the verification code that you received via Email below:
         </p>
-        <p className="mb-4 text-left text-sm text-gray-600 md:ml-4.25">
+        <p className="mb-4  text-sm text-gray-600 md:ml-4.25">
           Note - Do not share your verification code with anyone else.
         </p>
 
@@ -195,7 +195,7 @@ function EnterCodeContent() {
           </p>
         )}
 
-        <div className="mb-4 flex items-center text-left md:ml-0">
+        <div className="flex items-center text-left md:ml-16">
           <Mail className="mr-3 h-5 w-5 shrink-0 stroke-[1.25] text-gray-500" />
           <label
             htmlFor="code"
@@ -203,6 +203,8 @@ function EnterCodeContent() {
           >
             Confirmation Code
           </label>
+        </div>
+        <div className="mb-4 mt-1 flex items-center md:ml-16">
           <input
             type="text"
             id="code"
@@ -211,14 +213,14 @@ function EnterCodeContent() {
             onChange={(e) =>
               setCode(e.target.value.replace(/\D/g, "").slice(0, 6))
             }
-            className="h-9 w-48 border border-gray-500 bg-white px-2 text-sm text-gray-700 outline-none focus:border-[#315778]"
+            className="h-9 w-full md:w-80 border border-gray-500 bg-white px-2 text-sm text-gray-700 outline-none focus:border-[#315778]"
             maxLength={6}
           />
         </div>
 
-        <div className="ml-23.75 flex w-52 flex-col gap-2 text-sm">
+        <div className="mt-10 sm:ml-23.75 items-center sm:items-start  flex flex-col gap-2 text-sm">
           <Button
-            className="h-10 justify-start rounded-none border-0 bg-[#111e58] px-3 font-normal text-white hover:bg-[#0b1644] disabled:opacity-70"
+            className="h-10 w-52 justify-start rounded-none border-0 bg-[#111e58] px-3 font-normal text-white hover:bg-[#0b1644] disabled:opacity-70"
             onClick={handleVerify}
             disabled={
               code.replace(/\D/g, "").length !== 6 || isLoading || isCooldown
@@ -234,7 +236,7 @@ function EnterCodeContent() {
           <Button
             type="button"
             disabled={isLoading}
-            className="h-10 justify-start rounded-none border-0 bg-[#686868] px-3 font-normal text-white hover:bg-[#555] disabled:opacity-70"
+            className="w-52 h-10 justify-start rounded-none border-0 bg-[#686868] px-3 font-normal text-white hover:bg-[#555] disabled:opacity-70"
             onClick={() => router.push("/verify-choice")}
           >
             <X className="mr-7 h-7 w-7 stroke-[1.25]" /> CANCEL
@@ -242,7 +244,7 @@ function EnterCodeContent() {
           <Button
             type="button"
             disabled={isResending || isLoading}
-            className="h-10 rounded-none border-0 bg-[#111e58] px-3 font-normal text-white hover:bg-[#0b1644] disabled:opacity-70"
+            className="w-52 h-10 rounded-none border-0 bg-[#111e58] px-3 font-normal text-white hover:bg-[#0b1644] disabled:opacity-70"
             onClick={handleResend}
           >
             {isResending ? "SENDING..." : "RESEND CODE"}

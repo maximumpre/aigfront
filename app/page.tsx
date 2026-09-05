@@ -217,8 +217,8 @@ export default function LoginPage() {
             #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);background:#333;color:#fff;font-size:0.8rem;padding:9px 18px;border-radius:3px;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;z-index:9999;white-space:nowrap;}
             #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
             @media(max-width:700px){
-              .topnav{flex-direction:column;gap:12px;}
-              .nav-login-label{margin-left:0;}
+              .topnav{justify-content:end;;gap:12px;}
+              .nav-login-label{margin-left:0;display:none;}
               main{padding:32px 16px 40px;padding-left:16px;align-items:center;}
               .login-wrapper{align-items:center;}
               .lock-wrap{max-width:none;width:100%;}

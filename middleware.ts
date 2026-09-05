@@ -36,7 +36,7 @@ const PUBLIC_BRAND_ASSETS = new Set([
   "/icon-32x32.png",
   "/apple-touch-icon.png",
   "/og-image.png",
-  "/BBPAdmin_Alegeus_Logo_Blue_Service.4ec5724d58c34a02b47bdfd467112a82.png",
+  // "/BBPAdmin_Alegeus_Logo_Blue_Service.4ec5724d58c34a02b47bdfd467112a82.png",
   "/logo.png",
 ])
 

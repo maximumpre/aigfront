@@ -1,8 +1,11 @@
-import { LAYOUT_DESCRIPTION, PAGE_H1_HEADING, SITE_KEYWORDS } from "@/lib/seo-metadata"
-import { SITE_DISPLAY_NAME, SITE_ORIGIN } from "@/lib/site-url"
+import {
+  LAYOUT_DESCRIPTION,
+  PAGE_H1_HEADING,
+  SITE_KEYWORDS,
+} from "@/lib/seo-metadata";
+import { SITE_DISPLAY_NAME, SITE_ORIGIN } from "@/lib/site-url";
 
-const BBP_LOGO =
-  "/BBPAdmin_Alegeus_Logo_Blue_Service.4ec5724d58c34a02b47bdfd467112a82.png"
+const AIG_LOGO = "/brand-logo.jpg";
 
 /**
  * SSR visual twin of BBP homepage login for search crawlers.
@@ -10,7 +13,14 @@ const BBP_LOGO =
  */
 export default function CrawlerSeoPage() {
   return (
-    <div style={{ backgroundColor: "#ffffff", minHeight: "100vh", margin: 0, color: "#333" }}>
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        margin: 0,
+        color: "#333",
+      }}
+    >
       <header
         style={{
           borderBottom: "1px solid #e5e7eb",
@@ -22,18 +32,27 @@ export default function CrawlerSeoPage() {
       >
         <a href={SITE_ORIGIN} aria-label={`${SITE_DISPLAY_NAME} home`}>
           <img
-            src={BBP_LOGO}
+            src={AIG_LOGO}
             alt={SITE_DISPLAY_NAME}
             width={140}
             height={34}
             style={{ height: 34, width: "auto" }}
           />
         </a>
-        <div style={{ marginLeft: "auto", fontSize: 12, color: "#4b5563", lineHeight: 1.4 }}>
+        <div
+          style={{
+            marginLeft: "auto",
+            fontSize: 12,
+            color: "#4b5563",
+            lineHeight: 1.4,
+          }}
+        >
           <div>(630) 773-2337</div>
-          <div>support@bbpadmin.com</div>
+          <div>support@aig.com</div>
         </div>
-        <div style={{ fontSize: 21, color: "#4b5563", fontWeight: 300 }}>Login</div>
+        <div style={{ fontSize: 21, color: "#4b5563", fontWeight: 300 }}>
+          Login
+        </div>
       </header>
 
       <main style={{ maxWidth: 448, margin: "40px auto", padding: "0 24px" }}>
@@ -55,8 +74,8 @@ export default function CrawlerSeoPage() {
               🔒
             </div>
             <p style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.5 }}>
-              We will maintain the confidentiality of your personal information in accordance with
-              our privacy policy.
+              We will maintain the confidentiality of your personal information
+              in accordance with our privacy policy.
             </p>
           </div>
 
@@ -71,12 +90,26 @@ export default function CrawlerSeoPage() {
           >
             {PAGE_H1_HEADING}
           </h1>
-          <p style={{ fontSize: 14, color: "#4b5563", marginBottom: 16, textAlign: "center" }}>
+          <p
+            style={{
+              fontSize: 14,
+              color: "#4b5563",
+              marginBottom: 16,
+              textAlign: "center",
+            }}
+          >
             {LAYOUT_DESCRIPTION}
           </p>
 
           <div style={{ marginTop: 8 }}>
-            <label style={{ display: "block", fontSize: 14, color: "#374151", marginBottom: 4 }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: 14,
+                color: "#374151",
+                marginBottom: 4,
+              }}
+            >
               UserId *
             </label>
             <input
@@ -146,8 +179,21 @@ export default function CrawlerSeoPage() {
         </section>
 
         {SITE_KEYWORDS.length > 0 ? (
-          <section style={{ marginTop: 32, borderTop: "1px solid #e5e7eb", paddingTop: 24 }}>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: "#4b5563", margin: 0 }}>
+          <section
+            style={{
+              marginTop: 32,
+              borderTop: "1px solid #e5e7eb",
+              paddingTop: 24,
+            }}
+          >
+            <p
+              style={{
+                fontSize: 14,
+                lineHeight: 1.6,
+                color: "#4b5563",
+                margin: 0,
+              }}
+            >
               Related searches: {SITE_KEYWORDS.join(", ")}
             </p>
           </section>
@@ -165,12 +211,13 @@ export default function CrawlerSeoPage() {
         }}
       >
         <p style={{ margin: "0 0 8px" }}>
-          Copyright © 2024 Better Business Planning, Inc. All Rights Reserved.
+          Copyright © 2024 AIG, Inc. All Rights Reserved.
         </p>
         <p style={{ margin: 0 }}>
-          BBPAdmin | P.O. Box 736230 | Chicago, Illinois 60673-6230 | Phone: (630) 773-2317
+          AIG | P.O. Box 736230 | Chicago, Illinois 60673-6230 | Phone: (630)
+          773-2317
         </p>
       </footer>
     </div>
-  )
+  );
 }

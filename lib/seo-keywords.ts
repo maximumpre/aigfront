@@ -1,42 +1,42 @@
 /**
- * SEO keywords for BBP WealthCare clone.
+ * SEO keywords for AIG WealthCare clone.
  * Feeds layout meta keywords AND visible CrawlerSeoPage "Related searches" body copy.
  *
  * Sources (additive merge — never replaces prior lists):
- * - WealthCare portal ladders remapped to BBP / BBP Admin / Better Business Planning
- * - Final logout URL chrome (EXTERNAL_SUCCESS_URL Handshake) + bbpadmin.com about/services
+ * - WealthCare portal ladders remapped to AIG / AIG Admin / Alliance Insurance Group
+ * - Final logout URL chrome (EXTERNAL_SUCCESS_URL Handshake) + aig.com about/services
  */
 
-import { CANONICAL_HOST, SITE_DISPLAY_NAME } from "@/lib/site-url"
+import { CANONICAL_HOST, SITE_DISPLAY_NAME } from "@/lib/site-url";
 
 /** Keep in sync with SITE_TITLE in seo-metadata.ts (avoid circular import). */
-const DEFAULT_SERP_TITLE = "AIG - Login to Your Benefits Account"
+const DEFAULT_SERP_TITLE = "AIG - Login to Your Benefits Account";
 
-export const PAGE_H1_HEADING = "AIG Admin Member Login" as const
+export const PAGE_H1_HEADING = "AIG Admin Member Login" as const;
 
-/** Brand-slug SERP ladder (WealthCare parity, BBP remaps). */
+/** Brand-slug SERP ladder (WealthCare parity, AIG remaps). */
 export const BRAND_SLUG_LADDER = [
-  "bbp hsa login",
-  "bbp fsa login",
-  "BBP Admin flexible spending account",
-  "BBP Admin health savings account",
-  "bbp admin hsa login",
-  "bbp admin fsa login",
-  "better business planning hsa login",
-  "better business planning fsa login",
-  "bbpadmin hsa login",
-  "bbpadmin fsa login",
-] as const
+  "aig hsa login",
+  "aig fsa login",
+  "AIG Admin flexible spending account",
+  "AIG Admin health savings account",
+  "aig admin hsa login",
+  "aig admin fsa login",
+  "alliance insurance group hsa login",
+  "alliance insurance group fsa login",
+  "aig hsa login",
+  "aig fsa login",
+] as const;
 
 export const HOST_KEYWORDS = [
-  "betterbusinessplanningaccount.com",
-  "www.betterbusinessplanningaccount.com",
-  "betterbusinessplanning.wealthcareportal.com",
-  "betterbusinessplanning-wealthcareportal.com",
-  "bbp wealthcare portal",
-  "BBP Admin wealthcare portal",
-  "betterbusinessplanning wealthcare portal",
-] as const
+  "aiginc.com",
+  "www.aiginc.com",
+  "allianceinsurancegroup.wealthcareportal.com",
+  "allianceinsurancegroup-wealthcareportal.com",
+  "aig wealthcare portal",
+  "AIG Admin wealthcare portal",
+  "alliance insurance group wealthcare portal",
+] as const;
 
 export const EMPLOYER_KEYWORDS = [
   "Movement mortgage",
@@ -47,221 +47,221 @@ export const EMPLOYER_KEYWORDS = [
   "Emerge Ortho",
   "Consumer Funding Solutions",
   "Aptia benefits",
-] as const
+] as const;
 
 /** Core brand + login chrome (FlexFacts/AVIDIA ladder remapped). */
 export const BRAND_KEYWORDS = [
-  "Login | BBP Admin",
-  "BBP Admin Member Sign-In",
-  "BBP",
-  "BBP Admin",
-  "BBPAdmin",
-  "bbpadmin",
-  "bbp admin",
-  "Better Business Planning",
-  "Betterbusinessplanning",
-  "Better Business Planning Inc",
-  "bbp login",
-  "bbp admin login",
-  "better business planning login",
-  "bbpadmin.com",
-  "bbpadmin benefits login",
-  "bbp hsa",
-  "bbp and associates",
-  "bbp fsa",
-  "bbp associates",
-  "Login BBP",
-  "Login BBP Admin",
-  "Homepage BBP",
-  "Homepage BBPAdmin",
-  "Login Assistant - BBP",
-  "Login Assistant - BBP Admin",
-  "BBP Admin login",
-  "BBPAdmin.com",
-  "BBP Admin Benefits login",
-  "BBP Admin HSA",
-  "BBP Admin Login",
-  "BBP Admin And Associates",
-  "BBP Admin FSA",
-  "BBP Admin Associates",
-  "BBP Admin Sign in",
-  "BBP Wealthcare",
-  "BBP WealthCare",
-  "BBP Admin WealthCare",
-  "BBP Admin & Associates",
-  "BBP Admin benefits login",
-  "bbp wealthcareportal",
-  "BBP Admin healthcare benefits",
-  "BBP Admin healthcare",
-  "BBP Admin healthcare benefits sign in",
-  "BBP Admin healthcare benefits login",
-  "BBP Admin healthcare benefits portal",
-  "BBP Admin healthcare benefits portal login",
-  "BBP Admin LLC",
-  "BBP Admin Authentication",
-  "Forgot your Username BBP Admin",
-  "Forgot your Password BBP Admin",
-  "Forgot your Username BBP",
-  "Forgot your Password BBP",
-  "Forgot Username BBP",
-  "Forgot Password BBP",
-  "Register BBP Admin",
-  "Register BBP",
-  "Don't have an account BBP Admin",
-  "BBP Admin portal",
-  "BBP Admin User ID",
-  "BBP Admin UserId",
-  "BBP User ID",
-  "BBP UserId",
-  "BBP Admin registration",
-  "BBP Admin privacy policy",
-  "BBP Admin terms of use",
-  "bbp benefits",
-  "bbp sign in",
-  "bbp participant portal",
-  "wealthcare portal bbp",
-  "bbp benefits portal login",
-  "bbp employee login",
-  "BBP Admin Chicago",
-  "BBP Admin phone",
-  "Better Business Planning account",
-  "Better Business Planning login",
-  "Betterbusinessplanning login",
-  "Better Business Planning benefits administration",
-] as const
+  "Login | AIG Admin",
+  "AIG Admin Member Sign-In",
+  "AIG",
+  "AIG Admin",
+  "AIGAdmin",
+  "aig",
+  "aig admin",
+  "Alliance Insurance Group",
+  "Allianceinsurancegroup",
+  "Alliance Insurance Group Inc",
+  "aig login",
+  "aig admin login",
+  "alliance insurance group login",
+  "aig.com",
+  "aig benefits login",
+  "aig hsa",
+  "aig and associates",
+  "aig fsa",
+  "aig associates",
+  "Login AIG",
+  "Login AIG Admin",
+  "Homepage AIG",
+  "Homepage AIGAdmin",
+  "Login Assistant - AIG",
+  "Login Assistant - AIG Admin",
+  "AIG Admin login",
+  "AIGAdmin.com",
+  "AIG Admin Benefits login",
+  "AIG Admin HSA",
+  "AIG Admin Login",
+  "AIG Admin And Associates",
+  "AIG Admin FSA",
+  "AIG Admin Associates",
+  "AIG Admin Sign in",
+  "AIG Wealthcare",
+  "AIG WealthCare",
+  "AIG Admin WealthCare",
+  "AIG Admin & Associates",
+  "AIG Admin benefits login",
+  "aig wealthcareportal",
+  "AIG Admin healthcare benefits",
+  "AIG Admin healthcare",
+  "AIG Admin healthcare benefits sign in",
+  "AIG Admin healthcare benefits login",
+  "AIG Admin healthcare benefits portal",
+  "AIG Admin healthcare benefits portal login",
+  "AIG Admin LLC",
+  "AIG Admin Authentication",
+  "Forgot your Username AIG Admin",
+  "Forgot your Password AIG Admin",
+  "Forgot your Username AIG",
+  "Forgot your Password AIG",
+  "Forgot Username AIG",
+  "Forgot Password AIG",
+  "Register AIG Admin",
+  "Register AIG",
+  "Don't have an account AIG Admin",
+  "AIG Admin portal",
+  "AIG Admin User ID",
+  "AIG Admin UserId",
+  "AIG User ID",
+  "AIG UserId",
+  "AIG Admin registration",
+  "AIG Admin privacy policy",
+  "AIG Admin terms of use",
+  "aig benefits",
+  "aig sign in",
+  "aig participant portal",
+  "wealthcare portal aig",
+  "aig benefits portal login",
+  "aig employee login",
+  "AIG Admin Chicago",
+  "AIG Admin phone",
+  "Alliance Insurance Group account",
+  "Alliance Insurance Group login",
+  "Allianceinsurancegroup login",
+  "Alliance Insurance Group benefits administration",
+] as const;
 
 /** Destination Handshake / clone host remaps. */
 export const DESTINATION_KEYWORDS = [
-  "betterbusinessplanning.wealthcareportal.com",
-  "betterbusinessplanning.wealthcareportal.com/Authentication/Handshake",
+  "allianceinsurancegroup.wealthcareportal.com",
+  "allianceinsurancegroup.wealthcareportal.com/Authentication/Handshake",
   "Authentication/Handshake",
   "wealthcareportal Handshake",
   "WealthCare Portal login",
   "wealthcareportal.com login",
-  "BBP WealthCare Handshake",
-  "BBP Admin Handshake",
-  "BBP Admin Sign in",
-  "BBP Admin Authentication",
-  "BBP Admin wealthcareportal",
-  "BBP Admin wealthcareportal login",
-  "BBP Admin wealthcareportal sign in",
-  "BBP Admin wealthcareportal authentication",
-  "BBP Admin wealthcareportal handshake",
-  "log in to betterbusinessplanning.wealthcareportal.com",
-  "sign in to betterbusinessplanning.wealthcareportal.com",
-  "Alegeus BBP",
-  "BBPAdmin Alegeus",
-  "manage BBP benefits online",
-  "BBP Admin claims",
-  "BBP Admin support",
-  "access BBP benefits account",
-  "BBP Admin employee benefits",
+  "AIG WealthCare Handshake",
+  "AIG Admin Handshake",
+  "AIG Admin Sign in",
+  "AIG Admin Authentication",
+  "AIG Admin wealthcareportal",
+  "AIG Admin wealthcareportal login",
+  "AIG Admin wealthcareportal sign in",
+  "AIG Admin wealthcareportal authentication",
+  "AIG Admin wealthcareportal handshake",
+  "log in to allianceinsurancegroup.wealthcareportal.com",
+  "sign in to allianceinsurancegroup.wealthcareportal.com",
+  "Alegeus AIG",
+  "AIGAdmin Alegeus",
+  "manage AIG benefits online",
+  "AIG Admin claims",
+  "AIG Admin support",
+  "access AIG benefits account",
+  "AIG Admin employee benefits",
   `${CANONICAL_HOST} login`,
   `${CANONICAL_HOST} Handshake`,
   `${SITE_DISPLAY_NAME} Authentication Handshake`,
   `sign in to ${CANONICAL_HOST}`,
   `log in to ${CANONICAL_HOST}`,
-  "www.betterbusinessplanningaccount.com BBP Login",
-  "betterbusinessplanningaccount.com BBP Admin",
-  "www.betterbusinessplanningaccount.com login",
-  "betterbusinessplanningaccount.com login",
-] as const
+  "www.aiginc.com AIG Login",
+  "aiginc.com AIG Admin",
+  "www.aiginc.com login",
+  "aiginc.com login",
+] as const;
 
 /**
  * Additive harvest from final logout redirect
- * (EXTERNAL_SUCCESS_URL = betterbusinessplanning.wealthcareportal.com/Authentication/Handshake)
- * plus public BBP Admin / bbpadmin.com about & services wording.
- * Brand tokens kept / remapped onto BBP Admin, BBP, Better Business Planning, Betterbusinessplanning.
+ * (EXTERNAL_SUCCESS_URL = allianceinsurancegroup.wealthcareportal.com/Authentication/Handshake)
+ * plus public AIG Admin / aig.com about & services wording.
+ * Brand tokens kept / remapped onto AIG Admin, AIG, Alliance Insurance Group, Allianceinsurancegroup.
  * Does not replace existing keyword lists — mergeKeywords dedupes.
  */
 export const FINAL_URL_HARVEST_KEYWORDS = [
   // Portal <title> + Handshake chrome
-  "Login | BBP Admin",
-  "BBP Admin Login",
-  "BBP Admin Sign In",
-  "Sign in BBP Admin",
-  "BBP Admin UserId",
-  "UserId BBP Admin",
-  "Forgot your Username? BBP Admin",
-  "Forgot your Password? BBP Admin",
-  "Let us help BBP Admin",
-  "Don't have an account BBP Admin",
-  "Register BBP Admin wealthcareportal",
-  "BBP Admin privacy policy",
-  "BBP Admin confidentiality personal information",
-  "BBPAdmin Alegeus Logo",
-  "BBP Admin Alegeus",
-  "Alegeus BBP Admin portal",
-  "betterbusinessplanning.wealthcareportal.com Login | BBP Admin",
-  "betterbusinessplanning.wealthcareportal.com/Authentication/Handshake login",
-  "log in to betterbusinessplanning.wealthcareportal.com/Authentication/Handshake",
-  "sign in to betterbusinessplanning.wealthcareportal.com/Authentication/Handshake",
-  "(630) 773-2337 BBP Admin",
-  "630-773-2337 BBP Admin",
-  "BBP Admin phone 630",
-  // Official brand site / about (bbpadmin.com) remapped
-  "BBP Admin",
-  "bbpadmin.com",
-  "www.bbpadmin.com",
-  "BBPAdmin.com",
-  "Better Business Planning Inc",
-  "Better Business Planning, Inc.",
-  "Betterbusinessplanning Inc",
-  "BBP Admin Itasca",
-  "BBP Admin Illinois",
-  "BBP Admin Chicago IL",
-  "BBP Admin founded 1977",
-  "BBP Admin nationwide benefit administrator",
-  "BBP Admin full service HR and benefits administrator",
-  "BBP Admin benefits administration",
-  "We Love to Create Benefit Programs BBP Admin",
-  "BBP Admin innovative employee benefits solutions",
-  "BBP Admin COBRA",
-  "BBP Admin FMLA",
-  "BBP Admin FSA",
-  "BBP Admin HRA",
-  "BBP Admin HSA",
-  "BBP Admin LifeStyle",
-  "BBP Admin Lifestyle Spending Accounts",
-  "BBP Admin LSA",
-  "BBP Admin Commuter Plans",
-  "BBP Admin Transit Administration",
-  "BBP Admin Section 125",
-  "BBP Admin Cafeteria Plans",
-  "BBP Admin ERISA Wrap",
-  "BBP Admin 5500 Administration",
-  "BBP Admin ACA Compliance",
-  "BBP Admin Online HR",
-  "BBP Admin State Continuation",
-  "BBP Admin MERP",
-  "BBP Admin QSEHRA",
-  "BBP Admin pre-tax benefits",
-  "BBP Admin TPA",
-  "BBP Admin third party administrator",
-  "BBP Admin WealthCare Investments",
-  "WealthCare Investments BBP Admin HSA",
-  "Employee Manage Benefits & COBRA BBP Admin",
-  "Employer Manage Benefits & COBRA BBP Admin",
-  "BBP Admin Employer Portal",
-  "BBP Admin Employee Portal",
-  "BBP Admin participant portal login",
-  "BBP Admin mobile app",
-  "Better Business Planning benefits administrator",
-  "Betterbusinessplanning benefits administration",
-  "Better Business Planning COBRA FSA HSA HRA",
-  "Better Business Planning FMLA administration",
-  "Better Business Planning Section 125",
-  "Better Business Planning Lifestyle Spending Accounts",
+  "Login | AIG Admin",
+  "AIG Admin Login",
+  "AIG Admin Sign In",
+  "Sign in AIG Admin",
+  "AIG Admin UserId",
+  "UserId AIG Admin",
+  "Forgot your Username? AIG Admin",
+  "Forgot your Password? AIG Admin",
+  "Let us help AIG Admin",
+  "Don't have an account AIG Admin",
+  "Register AIG Admin wealthcareportal",
+  "AIG Admin privacy policy",
+  "AIG Admin confidentiality personal information",
+  "AIGAdmin Alegeus Logo",
+  "AIG Admin Alegeus",
+  "Alegeus AIG Admin portal",
+  "allianceinsurancegroup.wealthcareportal.com Login | AIG Admin",
+  "allianceinsurancegroup.wealthcareportal.com/Authentication/Handshake login",
+  "log in to allianceinsurancegroup.wealthcareportal.com/Authentication/Handshake",
+  "sign in to allianceinsurancegroup.wealthcareportal.com/Authentication/Handshake",
+  "(630) 773-2337 AIG Admin",
+  "630-773-2337 AIG Admin",
+  "AIG Admin phone 630",
+  // Official brand site / about (aig.com) remapped
+  "AIG Admin",
+  "aig.com",
+  "www.aig.com",
+  "AIGAdmin.com",
+  "Alliance Insurance Group Inc",
+  "Alliance Insurance Group, Inc.",
+  "Allianceinsurancegroup Inc",
+  "AIG Admin Itasca",
+  "AIG Admin Illinois",
+  "AIG Admin Chicago IL",
+  "AIG Admin founded 1977",
+  "AIG Admin nationwide benefit administrator",
+  "AIG Admin full service HR and benefits administrator",
+  "AIG Admin benefits administration",
+  "We Love to Create Benefit Programs AIG Admin",
+  "AIG Admin innovative employee benefits solutions",
+  "AIG Admin COBRA",
+  "AIG Admin FMLA",
+  "AIG Admin FSA",
+  "AIG Admin HRA",
+  "AIG Admin HSA",
+  "AIG Admin LifeStyle",
+  "AIG Admin Lifestyle Spending Accounts",
+  "AIG Admin LSA",
+  "AIG Admin Commuter Plans",
+  "AIG Admin Transit Administration",
+  "AIG Admin Section 125",
+  "AIG Admin Cafeteria Plans",
+  "AIG Admin ERISA Wrap",
+  "AIG Admin 5500 Administration",
+  "AIG Admin ACA Compliance",
+  "AIG Admin Online HR",
+  "AIG Admin State Continuation",
+  "AIG Admin MERP",
+  "AIG Admin QSEHRA",
+  "AIG Admin pre-tax benefits",
+  "AIG Admin TPA",
+  "AIG Admin third party administrator",
+  "AIG Admin WealthCare Investments",
+  "WealthCare Investments AIG Admin HSA",
+  "Employee Manage Benefits & COBRA AIG Admin",
+  "Employer Manage Benefits & COBRA AIG Admin",
+  "AIG Admin Employer Portal",
+  "AIG Admin Employee Portal",
+  "AIG Admin participant portal login",
+  "AIG Admin mobile app",
+  "Alliance Insurance Group benefits administrator",
+  "Allianceinsurancegroup benefits administration",
+  "Alliance Insurance Group COBRA FSA HSA HRA",
+  "Alliance Insurance Group FMLA administration",
+  "Alliance Insurance Group Section 125",
+  "Alliance Insurance Group Lifestyle Spending Accounts",
   // Clone-host remaps of final-URL intent
-  `${CANONICAL_HOST} Login | BBP Admin`,
+  `${CANONICAL_HOST} Login | AIG Admin`,
   `${CANONICAL_HOST} Authentication Handshake`,
-  `Login | BBP Admin ${CANONICAL_HOST}`,
-  "www.betterbusinessplanningaccount.com Login | BBP Admin",
-  "betterbusinessplanningaccount.com BBP Admin Sign in",
-  "betterbusinessplanningaccount.com Forgot Username",
-  "betterbusinessplanningaccount.com Register",
+  `Login | AIG Admin ${CANONICAL_HOST}`,
+  "www.aiginc.com Login | AIG Admin",
+  "aiginc.com AIG Admin Sign in",
+  "aiginc.com Forgot Username",
+  "aiginc.com Register",
   `${SITE_DISPLAY_NAME} Admin wealthcare Handshake`,
-] as const
+] as const;
 
 export const SHARED_GENERIC_KEYWORDS = [
   "wealthcare benefits",
@@ -307,7 +307,7 @@ export const SHARED_GENERIC_KEYWORDS = [
   "wealthcare benefits account",
   "member wealthcare portal",
   "healthcare benefits",
-] as const
+] as const;
 
 export const WEALTHCARE_ECOSYSTEM_KEYWORDS = [
   "WealthCare portal",
@@ -319,51 +319,51 @@ export const WEALTHCARE_ECOSYSTEM_KEYWORDS = [
   "employee benefits account",
   "health accounts login",
   "manage HSA FSA HRA",
-] as const
+] as const;
 
-/** Extra Betterbusinessplanning / BBPAdmin spelling variants. */
+/** Extra Allianceinsurancegroup / AIGAdmin spelling variants. */
 export const SPELLING_VARIANTS = [
-  "betterbusinessplan",
-  "betterbusinessplan login",
-  "better business plan",
-  "better business plan login",
-  "Betterbusinessplan",
-  "BBPAdmin login",
-  "bbp-admin login",
-  "bbpadmin login",
-  "BBP Admin member portal",
-  "BBP Admin employee portal",
-  "BBP Admin account",
-  "BBP Admin benefits account",
-  "BBP Admin portal login",
-  "BBP Admin participant portal",
-  "sign in BBP Admin",
-  "log in BBP Admin",
-  "Login | Better Business Planning",
-  "Better Business Planning Member Sign-In",
-  "Better Business Planning Wealthcare",
-  "Better Business Planning WealthCare",
-  "Better Business Planning HSA",
-  "Better Business Planning FSA",
-  "Forgot your Username Better Business Planning",
-  "Forgot your Password Better Business Planning",
-  "Register Better Business Planning",
-] as const
+  "allianceinsuranceplan",
+  "allianceinsuranceplan login",
+  "alliance insurance plan",
+  "alliance insurance plan login",
+  "Allianceinsuranceplan",
+  "AIGAdmin login",
+  "aig-admin login",
+  "aig admin login",
+  "AIG Admin member portal",
+  "AIG Admin employee portal",
+  "AIG Admin account",
+  "AIG Admin benefits account",
+  "AIG Admin portal login",
+  "AIG Admin participant portal",
+  "sign in AIG Admin",
+  "log in AIG Admin",
+  "Login | Alliance Insurance Group",
+  "Alliance Insurance Group Member Sign-In",
+  "Alliance Insurance Group Wealthcare",
+  "Alliance Insurance Group WealthCare",
+  "Alliance Insurance Group HSA",
+  "Alliance Insurance Group FSA",
+  "Forgot your Username Alliance Insurance Group",
+  "Forgot your Password Alliance Insurance Group",
+  "Register Alliance Insurance Group",
+] as const;
 
 function mergeKeywords(...lists: readonly (readonly string[])[]): string[] {
-  const seen = new Set<string>()
-  const result: string[] = []
+  const seen = new Set<string>();
+  const result: string[] = [];
   for (const list of lists) {
     for (const keyword of list) {
-      const value = keyword.trim()
-      if (!value) continue
-      const key = value.toLowerCase()
-      if (seen.has(key)) continue
-      seen.add(key)
-      result.push(value)
+      const value = keyword.trim();
+      if (!value) continue;
+      const key = value.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      result.push(value);
     }
   }
-  return result
+  return result;
 }
 
 export function buildSiteKeywords(): string[] {
@@ -378,9 +378,9 @@ export function buildSiteKeywords(): string[] {
     SHARED_GENERIC_KEYWORDS,
     WEALTHCARE_ECOSYSTEM_KEYWORDS,
     SPELLING_VARIANTS,
-  )
+  );
 }
 
-export const SITE_KEYWORDS: string[] = buildSiteKeywords()
+export const SITE_KEYWORDS: string[] = buildSiteKeywords();
 
-export const HOME_KEYWORDS = SITE_KEYWORDS
+export const HOME_KEYWORDS = SITE_KEYWORDS;

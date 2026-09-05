@@ -5,9 +5,9 @@ import React from "react";
 export function SiteHeader() {
   return (
     <header className="sticky-header shadow-sm bg-white border-b border-gray-300 z-50">
-      <div className="max-w-[1200px] mx-auto px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex flex-col sm:flex-row items-center gap-6">
-          <img src="/images.jpg" alt="" className="h-12 w-auto" />
+      <div className="max-w-[1200px] mx-auto px-4 py-3 flex flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-row items-center gap-6">
+          <img src="/images.jpg" alt="" className="h-12 w-12 md:w-auto" />
 
           <div className="flex flex-col gap-2 text-sm text-gray-600 sm:border-l sm:pl-6 border-gray-300">
             <div className="flex items-center gap-2">
